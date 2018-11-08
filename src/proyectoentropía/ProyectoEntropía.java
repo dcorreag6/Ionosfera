@@ -2,6 +2,7 @@ package proyectoentropía;
 import java.lang.*;
 import java.io.*;
 import java.util.*;
+import java.math.*;
 /**
  * @author al171800
  */
@@ -10,13 +11,17 @@ public class ProyectoEntropía
     public static void main(String[] args)
     {
         String n = null, name=null;
-        int t,i,cont=0,cont2=0,h=0;
+        int t,i = 0,cont=0,cont2=0,h=0,j2,band,i1,i2,y,f,c1 = 0,b;//cont=columnas,cont2=renglones,
+        double H,e=0.5;
         Scanner entrada=new Scanner(System.in);
         System.out.println("Hola, ingresa el nombre del archivo exactamente como lo encuentres en el explorador de archivos");
         name=entrada.nextLine();
         name=name+".csv";
-        String j[];
-        String k[][] = null; 
+        String j[]; //encabezado
+        String k[][] = null; //todos los datos 
+        String d[][]=null;//simbolos diferentes
+        AplicarFormula a=new AplicarFormula();
+        
         try
         {   
             FileReader input=new FileReader(name);
@@ -48,9 +53,10 @@ public class ProyectoEntropía
                     i++;
                 }
             }
+            
             while(n!=null)
             {
-                 n=binput.readLine();
+                n=binput.readLine();
                 if (n==null)
                 {
                     cont2=cont2-1;
@@ -58,26 +64,22 @@ public class ProyectoEntropía
                 else
                 {
                      cont2++;
-                   // System.out.println(" "+n);
+                   // System.out.println(""+n);
                 }
-              
+                
             }
             k= new String[cont2][cont];
-            
-            System.out.println(""+j[3]);
             binput.close();
         }
-        catch(IOException e)
+        catch(IOException ex)
         {
             System.out.println("\nNo se pudo cargar el archivo\n");
-        }   
-        
-        try
+        }
+        try //AQUI VALE VERDOLAGA
         {
             FileReader input=new FileReader(name);
             BufferedReader binput=new BufferedReader(input);
             binput.readLine();
-            i=0;
             for(t=0;t<cont2;t++)
             {
                 for(h=0;h<cont;h++)
@@ -85,7 +87,7 @@ public class ProyectoEntropía
                     k[t][h]="";
                 }
             }
-            for(t=0;t<cont2-1;t++)
+            for(t=0;t<cont2;t++)
             {
                 n=binput.readLine();
                 i=0;
@@ -101,11 +103,33 @@ public class ProyectoEntropía
                     }
                 }
             }
-            System.out.println(""+k[1][7]);
         }
-        catch(IOException e)
+        
+        
+        catch(IOException ex)
         {
             System.out.println("\nNo se pudo cargar el archivo\n");
         }
+        
+        
+          
+        /*if(cont>1)
+                    {
+                        d[i][0]=k[i1][0];
+                    }
+                    */
+        //Recorrer el arreglo de datos
+        i=1;
+        H=a.Entropia(cont, d, k, cont2, i);
+        while(H>e)
+        {
+            H=H-a.Entropia(cont, d, k, cont2, i);
+            i++;
+        }
+        
     }   
 }
+
+/* 
+El barbas se la come 
+*/
